@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cihanblt.dao.PersonDao;
 import com.cihanblt.models.Person;
@@ -13,9 +14,9 @@ import com.cihanblt.service.PersonService;
 public class PersonServiceImpl implements PersonService {
 	@Autowired
 	private PersonDao personDao;
-	
+
 	@Override
-	public Person getPersonelInformation(long record_id) {
+	public Person getPersonelInformation(int record_id) {
 		return personDao.getOnePerson(record_id);
 	}
 
@@ -23,6 +24,13 @@ public class PersonServiceImpl implements PersonService {
 	public List<Person> getAllPersonelInformation() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	@Transactional
+	public void savePerson(Person person) {
+		personDao.addPerson(person);
+		
 	}
 
 }
