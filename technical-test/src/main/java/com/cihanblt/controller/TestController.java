@@ -1,10 +1,12 @@
 package com.cihanblt.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cihanblt.models.Address;
 import com.cihanblt.models.Person;
+import com.cihanblt.service.AddressService;
 import com.cihanblt.service.PersonService;
 
 @RestController
@@ -27,6 +30,9 @@ import com.cihanblt.service.PersonService;
 public class TestController {
 	@Autowired
 	private PersonService personService;
+	
+	@Autowired
+	private AddressService addressService;
 	
 	@RequestMapping(value="/test",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -48,20 +54,21 @@ public class TestController {
 	}
 	@RequestMapping(value="/save-personel",method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public String addPersonel(@RequestBody @Validated Person person,HttpServletResponse response,HttpServletRequest request){
+	public ResponseEntity<Person> addPersonel(@RequestBody Person person,HttpServletResponse response,HttpServletRequest request){
 		Person person2 = new Person();
 		person2.setName(person.getName());
 		person2.setAge(person.getAge());
-		
-//		for(Address addr : person.getAddress()){
-//			Address address = new Address();
-//			address.setStreetName(addr.getStreetName());
-//			address.setHouseNumber(addr.getHouseNumber());
-//			address.setCity(addr.getStreetName());
-//		}
-//		person2.setAddress(person.getAddress());
-		
 		personService.savePerson(person2);
-		return "sonuc";
+
+		for(Address addr : person.getAddress()){
+			Address address = new Address();
+			address.setPerson(person2);
+			address.setStreetName(addr.getStreetName());
+			address.setHouseNumber(addr.getHouseNumber());
+			address.setCity(addr.getStreetName());
+			addressService.addNewAddress(address);
+		}
+		
+		return new ResponseEntity<Person>(person2,HttpStatus.OK);
 	}
 }

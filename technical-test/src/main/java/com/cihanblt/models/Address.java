@@ -4,6 +4,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 @Table(name="address")
 public class Address {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="record_id")
 	private int id;
 	@Column(name="house_number")	
@@ -25,8 +26,15 @@ public class Address {
 	@Column(name="city")
 	private String city;
 	@ManyToOne
+	@JoinColumn(name="person_id")
 	private Person person;
 	
+	public Person getPerson() {
+		return person;
+	}
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 	public long getId() {
 		return id;
 	}
