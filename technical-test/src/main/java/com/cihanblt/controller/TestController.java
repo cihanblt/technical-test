@@ -44,12 +44,19 @@ public class TestController {
 	@ResponseBody
 	public Person getPersonel(@PathVariable int record_id){
 		Person person = (Person)personService.getPersonelInformation(record_id);
+		person.getAddress();
 		return person;
 	}
 	@RequestMapping(value="/get-all-personel",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Person> getPersonel(){
-		return  personService.getAllPersonelInformation();
+		List<Person> result = personService.getAllPersonelInformation();
+		for (Person p:result){
+			p.getAddress();
+		}
+		
+		return result;
+		
 		
 	}
 	@RequestMapping(value="/save-personel",method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE)

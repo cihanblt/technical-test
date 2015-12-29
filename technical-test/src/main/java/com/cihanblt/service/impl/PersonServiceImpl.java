@@ -16,11 +16,13 @@ public class PersonServiceImpl implements PersonService {
 	private PersonDao personDao;
 
 	@Override
+	@Transactional
 	public Person getPersonelInformation(int record_id) {
 		return personDao.getOnePerson(record_id);
 	}
 
 	@Override
+	@Transactional
 	public List<Person> getAllPersonelInformation() {
 		return personDao.getAllPerson();
 	}

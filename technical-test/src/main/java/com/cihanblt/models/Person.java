@@ -10,15 +10,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
 @Table(name="person")
@@ -32,8 +29,8 @@ public class Person {
 	@Column(name="age")
 	private int age;
 	@OneToMany(mappedBy="person",cascade=CascadeType.PERSIST,fetch=FetchType.LAZY)
+	@JsonIgnore
 	private List<Address> address = new ArrayList<Address>(); 
-	
 	
 	public List<Address> getAddress() {
 		return address;
