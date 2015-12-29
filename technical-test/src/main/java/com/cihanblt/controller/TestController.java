@@ -1,5 +1,7 @@
 package com.cihanblt.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,8 +35,16 @@ public class TestController {
 		return r;
 	}
 	@RequestMapping(value="/get-personel/{record_id}",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
 	public Person getPersonel(@PathVariable int record_id){
-		return null;
+		Person person = (Person)personService.getPersonelInformation(record_id);
+		return person;
+	}
+	@RequestMapping(value="/get-all-personel",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Person> getPersonel(){
+		return  personService.getAllPersonelInformation();
+		
 	}
 	@RequestMapping(value="/save-personel",method=RequestMethod.POST,produces=MediaType.APPLICATION_JSON_VALUE,consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import com.cihanblt.dao.PersonDao;
@@ -17,16 +18,17 @@ public class PersonDaoImpl implements PersonDao{
 	
 	public void addPerson(Person person){
 		entityManager.persist(person);
-		entityManager.close();
 	}
 	public List<Person> getAllPerson(){
-		return null;
+		Query query = entityManager.createQuery("select p from Person p");
+		List<Person> list = query.getResultList();
+ 		return list;
 	}
 	public Person getOnePerson(int record_id){
-		entityManager.getTransaction().begin();
-		Person person = (Person)entityManager.createQuery("select * from person where record_id = 1").getSingleResult();
-		entityManager.close();
-		return null;
+		Query query = entityManager.createQuery("select p from Person p where record_id = :id");
+		query.setParameter("id", record_id);
+		Person person = (Person)query.getSingleResult();
+		return person;
 	}
 	
 }

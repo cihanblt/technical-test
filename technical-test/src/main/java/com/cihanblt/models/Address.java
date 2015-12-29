@@ -25,7 +25,6 @@ public class Address {
 	@Column(name="city")
 	private String city;
 	@ManyToOne
-	@JsonBackReference
 	private Person person;
 	
 	public long getId() {

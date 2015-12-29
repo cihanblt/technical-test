@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,8 +27,7 @@ public class Person {
 	private String name;
 	@Column(name="age")
 	private int age;
-	@JsonManagedReference
-	@OneToMany(mappedBy="person",cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="person",cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@Column(name="address_id")
 	private List<Address> address;
 	

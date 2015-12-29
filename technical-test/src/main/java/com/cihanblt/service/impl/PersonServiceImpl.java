@@ -22,8 +22,7 @@ public class PersonServiceImpl implements PersonService {
 
 	@Override
 	public List<Person> getAllPersonelInformation() {
-		// TODO Auto-generated method stub
-		return null;
+		return personDao.getAllPerson();
 	}
 
 	@Override
