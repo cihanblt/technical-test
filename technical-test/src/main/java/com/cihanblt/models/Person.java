@@ -1,6 +1,5 @@
 package com.cihanblt.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,8 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
@@ -28,9 +26,9 @@ public class Person {
 	private String name;
 	@Column(name="age")
 	private int age;
-	@OneToMany(mappedBy="person",cascade=CascadeType.PERSIST,fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<Address> address = new ArrayList<Address>(); 
+	@OneToMany(mappedBy="person",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@JsonManagedReference("personid")
+	private List<Address> address; 
 	
 	public List<Address> getAddress() {
 		return address;
@@ -55,6 +53,10 @@ public class Person {
 	}
 	public void setAge(int age) {
 		this.age = age;
+	}
+	@Override
+	public String toString() {
+		return "Person [name="+ name +", age=" + age + ", address=" + address + "]";
 	}
 	
 }

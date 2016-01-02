@@ -16,57 +16,11 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 	<context:component-scan base-package="com.cihanblt.controller" />
-	<context:component-scan base-package="com.cihanblt.service" />
-	<context:component-scan base-package="com.cihanblt.dao" />
 	<mvc:annotation-driven />
 	<mvc:annotation-driven>
-		<mvc:message-converters>
-			<bean id="jsonConverter"
-				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-<!-- 				<property name="objectMapper"> -->
-<!-- 					<bean id="jacksonObjectMapper" class="org.codehaus.jackson.map.ObjectMapper" /> -->
-<!-- 				</property> -->
-				<property name="prefixJson" value="false" />
-				<property name="supportedMediaTypes" value="application/json" />
-			</bean>
-		</mvc:message-converters>
+<!-- 		<mvc:message-converters> -->
+<!-- 				<bean class="org.springframework.http.converter.json.GsonHttpMessageConverter" /> -->
+<!-- 		</mvc:message-converters> -->
 	</mvc:annotation-driven>
-	<bean name="jsonView"
-		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
-	<bean id="entityManagerFactory"
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="pu" />
-		<property name="dataSource" ref="dataSource" />
-		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
-		<property name="jpaDialect" ref="jpaDialect" />
-		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
-		<property name="jpaProperties">
-			<props>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
-			</props>
-		</property>
-	</bean>
-
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/mydb" />
-		<property name="username" value="root" />
-		<property name="password" value="1234" />
-	</bean>
-	<bean id="jpaVendorAdapter"
-		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-		<property name="showSql" value="true" />
-		<property name="generateDdl" value="true" />
-	</bean>
-	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
-	<!-- Transaction Manager -->
-	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-		<property name="dataSource" ref="dataSource" />
-		<property name="jpaDialect" ref="jpaDialect" />
-	</bean>
-	<!-- Enable Transactional Manner -->
-	<tx:annotation-driven transaction-manager="txManager" />
+	<tx:annotation-driven/>
 </beans>

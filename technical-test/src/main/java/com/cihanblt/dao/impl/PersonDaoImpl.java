@@ -7,7 +7,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.cihanblt.dao.PersonDao;
 import com.cihanblt.models.Person;
@@ -29,7 +28,7 @@ public class PersonDaoImpl implements PersonDao{
 	}
 	
 	public Person getOnePerson(int record_id){
-		Query query = entityManager.createQuery("select p from Person p where record_id = :id");
+		Query query = entityManager.createQuery("select p from Person p where p.id = :id");
 		query.setParameter("id", record_id);
 		Person person = (Person)query.getSingleResult();
 		return person;

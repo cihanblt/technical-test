@@ -1,6 +1,5 @@
 package com.cihanblt.models;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +10,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
+
+
+
 
 @Entity
 @Table(name="address")
@@ -27,6 +30,7 @@ public class Address {
 	private String city;
 	@ManyToOne
 	@JoinColumn(name="person_id")
+	@JsonBackReference("personid")
 	private Person person;
 	
 	public Person getPerson() {
